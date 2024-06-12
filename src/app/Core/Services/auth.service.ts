@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://localhost:44394'
+  private apiUrl = 'https://himaikfinance.azurewebsites.net'
 
   constructor(private http: HttpClient) { }
 

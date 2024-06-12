@@ -7,7 +7,7 @@ import {Transaction} from '../Interfaces/transaction';
   providedIn: 'root'
 })
 export class TransactionService {
-  private url = 'https://localhost:44394/Transaction/GetAllTransactions';
+  private url = 'https://himaikfinance.azurewebsites.net/Transaction/GetAllTransactions';
   constructor(private http: HttpClient) { }
 
   getAllTransaction(): Observable<Transaction[]> {

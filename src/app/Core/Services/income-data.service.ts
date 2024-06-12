@@ -8,7 +8,7 @@ import { IncomeDataDto } from '../Interfaces/income-data-dto';
   providedIn: 'root'
 })
 export class IncomeDataService {
-  private url = 'https://localhost:44394/IncomeData';
+  private url = 'https://himaikfinance.azurewebsites.net/IncomeData';
 
   constructor(private http: HttpClient) { }
 
