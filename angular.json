@@ -24,6 +24,7 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "outputPath": "dist/himaikfinancemonitorapp.client",
+            "index": "src/index.html",
             "assets": [
               "src/favicon.ico",
               "src/assets"
