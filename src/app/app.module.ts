@@ -25,7 +25,7 @@ import { IncomeTableComponent } from './Core/Components/income-table/income-tabl
 import { TransactionTableComponent } from './Core/Components/transaction-table/transaction-table.component';
 import { HeaderPositionDirective} from './Core/Directives/app-header-position.directive';
 import { DashboardHeaderComponent } from './Core/Components/dashboard-header/dashboard-header.component';
-import { LayoutComponent} from "./Core/Components/layout/layout.component";
+
 
 @NgModule({
     declarations: [
@@ -43,7 +43,6 @@ import { LayoutComponent} from "./Core/Components/layout/layout.component";
         TransactionTableComponent,
         HeaderPositionDirective,
         DashboardHeaderComponent,
-        LayoutComponent
     ],
   imports: [
     BrowserModule,

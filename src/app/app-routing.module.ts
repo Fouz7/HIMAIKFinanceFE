@@ -4,7 +4,6 @@ import { LandingPageComponent } from './Feature/landing-page/landing-page.compon
 import { AdminDashboardComponent } from './Feature/admin-dashboard/admin-dashboard.component';
 import { LoginComponent } from './Feature/login/login.component';
 import { AuthGuard } from './Core/Utils/auth.guard';
-import { LayoutComponent} from "./Core/Components/layout/layout.component";
 
 const routes: Routes = [
   {
@@ -20,10 +19,6 @@ const routes: Routes = [
     component: AdminDashboardComponent,
     canActivate: [AuthGuard]
   },
-  {
-    path:'layout',
-    component: LayoutComponent
-  }
 ];
 
 @NgModule({
