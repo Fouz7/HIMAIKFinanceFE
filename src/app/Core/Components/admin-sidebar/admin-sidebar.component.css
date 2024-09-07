@@ -15,10 +15,20 @@
   flex-direction: column;
 }
 
+.sidebar.is-active + .content {
+  margin-left: 200px;
+  transition: margin-left 0.3s;
+}
+
+.content {
+  transition: margin-left 0.3s;
+}
+
 .menu {
   display: flex;
   flex-direction: column;
   gap: 5rem;
+  margin-top: 4rem;
 }
 
 .sidebar .menu-item {

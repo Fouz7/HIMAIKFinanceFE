@@ -7,6 +7,11 @@ import { Component } from '@angular/core';
 })
 export class AdminDashboardComponent {
   activeComponent = 'dashboard';
+  isSidebarExtended = false;
+
+  toggleSidebar() {
+    this.isSidebarExtended = !this.isSidebarExtended;
+  }
 
   navigate(route: string) {
     this.activeComponent = route;

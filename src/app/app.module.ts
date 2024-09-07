@@ -4,9 +4,9 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-
-
 import { ButtonModule } from 'primeng/button';
+import { InputTextModule } from 'primeng/inputtext';
+import { CalendarModule } from 'primeng/calendar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -25,6 +25,7 @@ import { IncomeTableComponent } from './Core/Components/income-table/income-tabl
 import { TransactionTableComponent } from './Core/Components/transaction-table/transaction-table.component';
 import { HeaderPositionDirective} from './Core/Directives/app-header-position.directive';
 import { DashboardHeaderComponent } from './Core/Components/dashboard-header/dashboard-header.component';
+import { LayoutComponent} from "./Core/Components/layout/layout.component";
 
 @NgModule({
     declarations: [
@@ -41,7 +42,8 @@ import { DashboardHeaderComponent } from './Core/Components/dashboard-header/das
         IncomeTableComponent,
         TransactionTableComponent,
         HeaderPositionDirective,
-        DashboardHeaderComponent
+        DashboardHeaderComponent,
+        LayoutComponent
     ],
   imports: [
     BrowserModule,
@@ -50,7 +52,9 @@ import { DashboardHeaderComponent } from './Core/Components/dashboard-header/das
     AppRoutingModule,
     ButtonModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    InputTextModule,
+    CalendarModule,
   ],
   providers: [
     provideAnimationsAsync(),

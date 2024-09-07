@@ -12,6 +12,7 @@ export class IncomeTableComponent {
   incomeForm: FormGroup;
   pageNumber: number = 1;
   pageSize: number = 10;
+  isDataLoaded: boolean = false;
 
   constructor(
     private incomeDataService: IncomeDataService,
@@ -33,6 +34,7 @@ export class IncomeTableComponent {
       .subscribe(data => {
         console.log('DataIncome:', data);
         this.incomeData = data;
+        this.isDataLoaded = true;
       }, error => {
         console.error('Error:', error);
       });
@@ -43,15 +45,13 @@ export class IncomeTableComponent {
       this.incomeDataService.addIncomeData(this.incomeForm.value)
         .subscribe(response => {
           console.log('Income added:', response);
-          this.getAllIncomeData(); // Refresh the table
-          this.closeModal(); // Close the modal
+          this.getAllIncomeData();
+          this.closeModal();
         }, error => {
           console.error('Error:', error);
         });
     }
   }
-
-
 
   openModal() {
     const modal = document.getElementById('myModal')

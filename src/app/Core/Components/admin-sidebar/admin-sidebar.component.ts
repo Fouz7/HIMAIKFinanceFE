@@ -9,9 +9,11 @@ export class AdminSidebarComponent {
   sidebarOpen = false;
 
   @Output() navigateEvent = new EventEmitter<string>();
+  @Output() toggleEvent = new EventEmitter<boolean>();
 
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
+    this.toggleEvent.emit(this.sidebarOpen);
   }
 
   navigate(route: string) {
