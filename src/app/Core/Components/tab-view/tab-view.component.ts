@@ -1,24 +1,25 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { IncomeDataService } from '../../Services/income-data.service';
-import { TransactionService } from '../../Services/transaction.service';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {IncomeDataService} from '../../Services/income-data.service';
+import {TransactionService} from '../../Services/transaction.service';
 
 @Component({
   selector: 'app-tab-view',
   templateUrl: './tab-view.component.html',
-  styleUrl: './tab-view.component.css',
+  styleUrls: ['./tab-view.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
 export class TabViewComponent {
   incomeData: any[] = [];
   transactionData: any[] = [];
-  selectedTab = 0
+  selectedTab = 0;
   pageNumber: number = 1;
   pageSize: number = 10;
 
   constructor(
     private incomeDataService: IncomeDataService,
     private transactionService: TransactionService
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
     this.getAllIncomeData();
@@ -46,19 +47,26 @@ export class TabViewComponent {
   }
 
   selectTab(index: number) {
-    this.selectedTab = index
+    this.selectedTab = index;
   }
 
   nextPage() {
     this.pageNumber++;
-    this.getAllIncomeData();
+    if (this.selectedTab === 0) {
+      this.getAllIncomeData();
+    } else if (this.selectedTab === 1) {
+      this.getAllTransactionPaginated();
+    }
   }
 
   prevPage() {
     if (this.pageNumber > 1) {
       this.pageNumber--;
-      this.getAllIncomeData();
+      if (this.selectedTab === 0) {
+        this.getAllIncomeData();
+      } else if (this.selectedTab === 1) {
+        this.getAllTransactionPaginated();
+      }
     }
   }
-
 }
