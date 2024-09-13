@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ButtonModule } from 'primeng/button';
 import { InputTextModule } from 'primeng/inputtext';
 import { CalendarModule } from 'primeng/calendar';
+import {ChartModule} from "primeng/chart";
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -54,6 +55,7 @@ import { DashboardHeaderComponent } from './Core/Components/dashboard-header/das
     ReactiveFormsModule,
     InputTextModule,
     CalendarModule,
+    ChartModule
   ],
   providers: [
     provideAnimationsAsync(),

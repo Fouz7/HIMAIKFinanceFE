@@ -4,6 +4,23 @@
   gap: 1rem;
 }
 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.title {
+  color: white;
+  font-weight: bold;
+  font-size: 2rem;
+}
+
+h1{
+  color: white;
+  text-align: center;
+}
+
 table {
   width: 100%;
   border-collapse: separate;
@@ -17,7 +34,7 @@ table {
 }
 
 th, td {
-  padding: 15px;
+  padding: 10px;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
   color: white;
@@ -31,6 +48,10 @@ tr:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+label{
+  color: white;
+}
+
 .modal {
   display: none;
   position: fixed;
@@ -40,18 +61,22 @@ tr:hover {
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(5px);
 }
+
 
 .modal-content {
   display: flex;
   flex-direction: column;
-  background-color: #fefefe;
-  border-radius: 8px;
+  background: #001845;
+  border-radius: 10px;
   margin: 15% auto;
   padding: 20px;
-  border: 1px solid #888;
+  border: 1px solid rgba(255, 255, 255, 0.18);
   width: fit-content;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 form{
@@ -60,9 +85,20 @@ form{
   gap: 1rem;
 }
 
-input{
+input {
   font-size: 1rem;
   padding: 0.5rem;
+  border: none;
+  border-bottom: 1px solid white;
+  background: none;
+  color: white;
+  outline: none;
+  border-radius: 0;
+}
+
+input:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 :host ::ng-deep .p-calendar{
@@ -73,6 +109,17 @@ input{
 :host ::ng-deep .p-calendar input {
   font-size: 1rem;
   padding: 0.5rem;
+  border: none;
+  border-bottom: 1px solid white;
+  background: none;
+  color: white;
+  outline: none;
+  border-radius: 0;
+}
+
+:host ::ng-deep .p-calendar input:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 
@@ -83,7 +130,7 @@ input{
 }
 
 .submit-button{
-  background-color: #4CAF50;
+  background-color: rgba(0, 0, 255, 0.4);
   width: 100%;
   color: white;
   padding: 10px 15px;
@@ -91,6 +138,15 @@ input{
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.submit-button i {
+  margin-right: 10px;
+  font-size: 12px;
+}
+
+.submit-button:hover{
+  background-color: rgba(0, 0, 255, 0.6);
 }
 
 .add-button{
@@ -104,4 +160,68 @@ input{
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: rgba(0, 0, 255, 0.4);
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.circle-button:hover {
+  background-color: rgba(0, 0, 255, 0.6);
+}
+
+.delete-button {
+  background-color: red;
+  color: white;
+  border: none;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.delete-button i {
+  font-size: 0.8rem;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+}
+
+.pagination-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+}
+
+.pagination-controls button {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(10px);
+  color: white;
+  width: 100px;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background 0.3s;
+}
+
+.pagination-controls button:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.pagination-controls button:disabled {
+  background: rgba(255, 255, 255, 0.05);
+  cursor: not-allowed;
+}
+
+.pagination-controls span {
+  font-size: 1rem;
+  color: white;
 }

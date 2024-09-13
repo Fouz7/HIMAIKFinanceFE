@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import {IncomeDataService} from "../../Services/income-data.service";
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {IncomeDataService} from '../../Services/income-data.service';
 
 @Component({
   selector: 'app-income-table',
   templateUrl: './income-table.component.html',
-  styleUrl: './income-table.component.css'
+  styleUrls: ['./income-table.component.css']
 })
-export class IncomeTableComponent {
+export class IncomeTableComponent implements OnInit {
   incomeData: any[] = [];
   incomeForm: FormGroup;
   pageNumber: number = 1;
   pageSize: number = 10;
   isDataLoaded: boolean = false;
+  hasMoreData: boolean = true;
 
   constructor(
     private incomeDataService: IncomeDataService,
@@ -35,6 +36,7 @@ export class IncomeTableComponent {
         console.log('DataIncome:', data);
         this.incomeData = data;
         this.isDataLoaded = true;
+        this.hasMoreData = data.length === this.pageSize;
       }, error => {
         console.error('Error:', error);
       });
@@ -46,6 +48,7 @@ export class IncomeTableComponent {
         .subscribe(response => {
           console.log('Income added:', response);
           this.getAllIncomeData();
+          this.incomeForm.reset();
           this.closeModal();
         }, error => {
           console.error('Error:', error);
@@ -53,24 +56,45 @@ export class IncomeTableComponent {
     }
   }
 
+  deleteIncome(id: number) {
+    this.incomeDataService.deleteIncomeData(id).subscribe(() => {
+      console.log('Income deleted');
+      this.getAllIncomeData();
+    }, error => {
+      console.error('Error:', error);
+    });
+  }
+
   openModal() {
-    const modal = document.getElementById('myModal')
-      if (modal) {
-        modal.style.display = 'block'
-        document.addEventListener('click', (event) => {
-          if (event.target === modal) {
-            this.closeModal()
-          }
-        })
-      }
+    const modal = document.getElementById('myModal');
+    if (modal) {
+      modal.style.display = 'block';
+      document.addEventListener('click', (event) => {
+        if (event.target === modal) {
+          this.closeModal();
+        }
+      });
+    }
   }
 
   closeModal() {
-    const modal = document.getElementById('myModal')
-      if (modal) {
-        modal.style.display = 'none'
-      }
+    const modal = document.getElementById('myModal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
   }
 
+  prevPage() {
+    if (this.pageNumber > 1) {
+      this.pageNumber--;
+      this.getAllIncomeData();
+    }
+  }
 
+  nextPage() {
+    if (this.hasMoreData) {
+      this.pageNumber++;
+      this.getAllIncomeData();
+    }
+  }
 }

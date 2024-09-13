@@ -1,6 +1,7 @@
 <div id="myModal" class="modal">
   <div class="modal-content">
     <form [formGroup]="incomeForm" (ngSubmit)="addIncome()">
+      <h1>Add Income</h1>
       <div class="form-input">
         <label>
           Name
@@ -28,15 +29,20 @@
         <p-calendar class="input" formControlName="transferDate" dateFormat="dd-mm-yy"></p-calendar>
       </div>
       <div>
-        <button class="submit-button" type="submit">Submit</button>
+        <button class="submit-button" type="submit">
+          <i class="pi pi-plus"></i> Add
+        </button>
       </div>
     </form>
   </div>
 </div>
 
-<div class="container">
-  <div class="add-button">
-    <button pButton type="button" icon="pi pi-plus" (click)="openModal()" class="circle-button"></button>
+<div class="container" *ngIf="isDataLoaded">
+  <div class="header">
+    <span class="title">Income Data Table</span>
+    <div class="add-button">
+      <button pButton type="button" icon="pi pi-plus" (click)="openModal()" class="circle-button"></button>
+    </div>
   </div>
 
   <table>
@@ -46,6 +52,8 @@
       <th>Name</th>
       <th>Nominal</th>
       <th>Transfer Date</th>
+      <th>Created By</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>
@@ -54,7 +62,19 @@
       <td>{{ income.name }}</td>
       <td>{{ income.nominal }}</td>
       <td>{{ income.transferDate | date:'dd-MM-yyyy' }}</td>
+      <td>{{ income.createdBy }}</td>
+      <td>
+        <button (click)="deleteIncome(income.id)" class="delete-button">
+          <i class="pi pi-trash"></i>
+        </button>
+      </td>
     </tr>
     </tbody>
   </table>
+
+  <div *ngIf="isDataLoaded" class="pagination-controls">
+    <button (click)="prevPage()" [disabled]="pageNumber === 1">Previous</button>
+    <span>Page {{ pageNumber }}</span>
+    <button (click)="nextPage()" [disabled]="!hasMoreData">Next</button>
+  </div>
 </div>

@@ -1,20 +1,62 @@
-<table>
-  <thead>
-  <tr>
-    <th>No</th>
-    <th>Debit</th>
-    <th>Credit</th>
-    <th>Balance</th>
-    <th>Notes</th>
-  </tr>
-  </thead>
-  <tbody>
-  <tr *ngFor="let transaction of transactionData; let i = index">
-    <td>{{i + 1}}</td>
-    <td>{{transaction.debit}}</td>
-    <td>{{transaction.credit}}</td>
-    <td>{{transaction.balance}}</td>
-    <td>{{transaction.notes}}</td>
-  </tr>
-  </tbody>
-</table>
+<div id="myModal" class="modal">
+  <div class="modal-content">
+    <form [formGroup]="transactionForm" (ngSubmit)="addTransaction()">
+      <h1>Add Transaction</h1>
+      <div class="form-input">
+        <label>Nominal</label>
+        <input pInputText formControlName="debit" class="input">
+      </div>
+      <div class="form-input">
+        <label>Notes</label>
+        <input pInputText formControlName="notes" class="input">
+      </div>
+      <div>
+        <button class="submit-button" type="submit">
+          <i class="pi pi-plus"></i> Add
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="container" *ngIf="isDataLoaded">
+  <div class="header">
+    <span class="title">Transaction Data Table</span>
+    <div class="add-button">
+      <button pButton type="button" icon="pi pi-plus" (click)="openModal()" class="circle-button"></button>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+    <tr *ngIf="isDataLoaded">
+      <th>No</th>
+      <th>Debit</th>
+      <th>Credit</th>
+      <th>Balance</th>
+      <th>Notes</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let transaction of transactionData; let i = index">
+      <td>{{i + 1}}</td>
+      <td>{{transaction.debit}}</td>
+      <td>{{transaction.credit}}</td>
+      <td>{{transaction.balance}}</td>
+      <td>{{transaction.notes}}</td>
+      <td>
+        <button [disabled]="transaction.debit <= 0" (click)="deleteTransaction(transaction.id)" class="delete-button" [ngClass]="{'disabled': transaction.debit <= 0}">
+          <i class="pi pi-trash"></i>
+        </button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div *ngIf="isDataLoaded" class="pagination-controls">
+    <button (click)="prevPage()" [disabled]="pageNumber === 1">Previous</button>
+    <span>Page {{ pageNumber }}</span>
+    <button (click)="nextPage()" [disabled]="!hasMoreData">Next</button>
+  </div>
+</div>

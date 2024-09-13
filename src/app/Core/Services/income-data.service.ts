@@ -24,4 +24,8 @@ export class IncomeDataService {
   addIncomeData(incomeData: IncomeDataDto): Observable<IncomeDataDto> {
     return this.http.post<IncomeDataDto>(this.url + '/AddIncomeData', incomeData);
   }
+
+  deleteIncomeData(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.url}/DeleteIncomeData/${id}`);
+  }
 }
