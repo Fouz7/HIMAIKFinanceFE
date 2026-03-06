@@ -1,20 +1,22 @@
 .container {
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 1rem;
-  padding: 1rem;
-  width: 90%;
-  margin: 0 auto;
+  justify-content: flex-start;
+  align-items: stretch;
+  width: 100%;
+  height: calc(100vh - 150px);
+  min-height: 400px;
+  box-sizing: border-box;
+  margin-top: 2rem;
 }
 
 .card-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  gap: 1rem;
+  gap: 2rem;
   width: 100%;
+  height: 100%;
 }
 
 .card-grid app-card:nth-child(1) {
@@ -38,6 +40,7 @@
 .card-grid app-card {
   width: 100%;
   height: 100%;
+  display: block;
 }
 
 .card-grid app-card.balance {
@@ -131,16 +134,28 @@ p-chart {
   height: 200px;
 }
 
-@media screen and (max-width: 768px) {
-  .card-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
+@media screen and (max-width: 900px) {
+  .container {
+    height: auto;
+    min-height: auto;
+    margin-bottom: 2rem;
   }
 
-  .card-grid app-card:nth-child(1),
-  .card-grid app-card:nth-child(2),
+  .card-grid {
+    display: flex;
+    flex-direction: column;
+    height: auto;
+  }
+
+  .card-grid app-card:nth-child(1) {
+    order: 2;
+  }
+
+  .card-grid app-card:nth-child(2) {
+    order: 1;
+  }
+
   .card-grid app-card:nth-child(3) {
-    grid-column: 1;
-    grid-row: auto;
+    order: 3;
   }
 }

@@ -1,11 +1,17 @@
-<div class="layout-container" [ngClass]="{'sidebar-extended': isSidebarExtended}">
-  <app-admin-sidebar (navigateEvent)="navigate($event)" (toggleEvent)="toggleSidebar()"></app-admin-sidebar>
-  <div class="navbar">
-    <app-dashboard-header></app-dashboard-header>
+<div class="layout-container" [ngClass]="{'sidebar-extended': isSidebarExtended, 'mobile-open': isMobileSidebarOpen}">
+  <app-admin-sidebar [sidebarOpen]="isSidebarExtended" [mobileSidebarOpen]="isMobileSidebarOpen"
+    (navigateEvent)="navigate($event)" (toggleEvent)="toggleSidebar()"
+    (closeMobileEvent)="isMobileSidebarOpen = false"></app-admin-sidebar>
+
+  <div class="navbar-wrapper">
+    <app-dashboard-header (toggleSidebar)="toggleMobileSidebar()"></app-dashboard-header>
   </div>
+
+  <div class="mobile-overlay" *ngIf="isMobileSidebarOpen" (click)="toggleMobileSidebar()"></div>
+
   <div class="content">
-    <app-dashboard *ngIf="activeComponent === 'dashboard'"/>
-    <app-income-table *ngIf="activeComponent === 'income'"/>
-    <app-transaction-table *ngIf="activeComponent === 'transaction'"/>
+    <app-dashboard *ngIf="activeComponent === 'dashboard'" />
+    <app-income-table *ngIf="activeComponent === 'income'" />
+    <app-transaction-table *ngIf="activeComponent === 'transaction'" />
   </div>
 </div>

@@ -64,7 +64,9 @@
 }
 
 .container2 {
-  margin: 0 1%;
+  padding: 0 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 app-tab-view {
@@ -113,25 +115,22 @@ footer {
   border-radius: 12px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 900px) {
   .card-grid {
-    grid-template-columns: 1fr;
-    grid-template-rows: auto;
+    display: flex;
+    flex-direction: column;
   }
 
   .card-grid app-card:nth-child(1) {
-    grid-column: 1;
-    grid-row: auto;
+    order: 2;
   }
 
   .card-grid app-card:nth-child(2) {
-    grid-column: 1;
-    grid-row: auto;
+    order: 1;
   }
 
   .card-grid app-card:nth-child(3) {
-    grid-column: 1;
-    grid-row: auto;
+    order: 3;
   }
 
   .footer {

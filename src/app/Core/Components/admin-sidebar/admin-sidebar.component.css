@@ -1,72 +1,94 @@
 .sidebar {
-  position: absolute;
+  position: fixed;
+  z-index: 1001;
   left: 0;
-  height: 100%;
+  top: 0;
+  height: 100vh;
   width: 60px;
-  padding-top: 60px;
-  background-color: rgba(255, 255, 255, 0.1);
+  padding-top: 80px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
   overflow-x: hidden;
-  transition: width 0.5s;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .sidebar.is-active {
-  width: 150px;
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar.is-active + .content {
-  margin-left: 200px;
-  transition: margin-left 0.3s;
-}
-
-.content {
-  transition: margin-left 0.3s;
+  width: 180px;
 }
 
 .menu {
   display: flex;
   flex-direction: column;
-  gap: 5rem;
-  margin-top: 4rem;
+  gap: clamp(2rem, 5vh, 4rem);
+  margin-top: clamp(1rem, 3vh, 3rem);
 }
 
 .sidebar .menu-item {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
-  gap: 1rem;
+  padding: 0.8rem 18px;
   color: white;
   cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  border-radius: 8px;
+  margin: 0;
+  gap: 1.2rem;
+}
+
+.sidebar .menu-item:hover {
+  background-color: rgba(255, 255, 255, 0.15);
 }
 
 .sidebar .menu-item i {
+  font-size: 1.2rem;
+  width: 24px;
+  text-align: center;
+}
+
+.menu-bottom {
+  padding-bottom: 2rem;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  gap: 2.5rem;
 }
 
 .toggle-button {
-  position: absolute;
-  bottom: 0;
   width: 100%;
-  font-size: 36px;
   background-color: transparent;
   color: white;
   border: none;
   cursor: pointer;
+  padding: 1rem 18px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .icon-size,
 .icon-menu {
   font-size: 24px;
-  color: white;
 }
 
-#main {
-  padding: 16px;
-  transition: margin-left .5s;
-}
+@media screen and (max-width: 900px) {
+  .sidebar {
+    width: 250px;
+    left: -250px;
+    /* Hidden off canvas */
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.5);
+  }
 
-#main.is-expanded {
-  margin-left: 250px;
+  .sidebar.mobile-open {
+    left: 0;
+  }
+
+  .desktop-only {
+    display: none;
+  }
 }

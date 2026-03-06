@@ -10,11 +10,16 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   username: string = '';
   password: string = '';
+  showPassword: boolean = false;
 
   constructor(
     private authService: AuthService,
     private router: Router
   ) { }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
+  }
 
   submit() {
     const credentials = { username: this.username, password: this.password };

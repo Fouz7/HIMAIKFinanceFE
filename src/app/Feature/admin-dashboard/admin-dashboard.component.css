@@ -1,61 +1,73 @@
 .layout-container {
   display: flex;
   flex-direction: row;
-}
-
-app-dashboard {
+  min-height: 100vh;
   width: 100%;
 }
 
-.navbar {
+.navbar-wrapper {
   position: fixed;
   top: 0;
-  left: 50px;
-  width: calc(100% - 40px);
-  height: 50px;
-  color: white;
-  padding: 0 10px;
-  transition: left 0.5s;
+  left: 60px;
+  width: calc(100% - 60px);
+  height: 80px;
   z-index: 1000;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
-.sidebar {
-  width: 50px;
-  background-color: #444;
-  color: white;
-  height: 100vh;
-  transition: width 0.3s;
-}
-
-.sidebar.extended {
-  width: 200px;
+.sidebar-extended .navbar-wrapper {
+  left: 180px;
+  width: calc(100% - 180px);
 }
 
 .content {
   flex-grow: 1;
-  padding: 80px 5% 0 5%;
+  padding: 100px 3% 0 3%;
   margin-left: 60px;
-  transition: margin-left 0.3s;
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   box-sizing: border-box;
   max-width: calc(100vw - 60px);
-}
-
-.sidebar-extended .navbar {
-  width: calc(100% - 130px);
-  left: 140px;
+  width: 100%;
 }
 
 .sidebar-extended .content {
-  margin-left: 150px;
-  max-width: calc(100vw - 150px);
+  margin-left: 180px;
+  max-width: calc(100vw - 180px);
 }
 
-.menu-item {
-  display: flex;
-  align-items: center;
-  padding: 10px;
+app-dashboard,
+app-income-table,
+app-transaction-table {
+  display: block;
+  width: 100%;
 }
 
-.menu-item i {
-  margin-right: 10px;
+.mobile-overlay {
+  display: none;
+}
+
+/* Tablet and Mobile Responsiveness */
+@media screen and (max-width: 900px) {
+  .navbar-wrapper {
+    left: 0 !important;
+    width: 100% !important;
+  }
+
+  .content {
+    margin-left: 0 !important;
+    max-width: 100vw !important;
+    padding-top: 90px;
+  }
+
+  .mobile-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(2px);
+    z-index: 1000;
+  }
 }

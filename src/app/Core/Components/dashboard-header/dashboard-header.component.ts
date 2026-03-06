@@ -1,6 +1,4 @@
-import { Component } from '@angular/core';
-import {AuthService} from "../../Services/auth.service";
-import { Router } from '@angular/router';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-dashboard-header',
@@ -8,12 +6,9 @@ import { Router } from '@angular/router';
   styleUrl: './dashboard-header.component.css'
 })
 export class DashboardHeaderComponent {
+  @Output() toggleSidebar = new EventEmitter<void>();
 
-  constructor(private authService: AuthService, private router: Router) { }
-
-  logout() {
-    this.authService.logout();
-    this.router.navigate(['/']);
+  onToggle() {
+    this.toggleSidebar.emit();
   }
-
 }

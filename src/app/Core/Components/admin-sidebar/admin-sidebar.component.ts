@@ -1,4 +1,6 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { AuthService } from '../../Services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-sidebar',
@@ -6,10 +8,14 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./admin-sidebar.component.css']
 })
 export class AdminSidebarComponent {
-  sidebarOpen = false;
+  @Input() sidebarOpen = false;
+  @Input() mobileSidebarOpen = false;
 
   @Output() navigateEvent = new EventEmitter<string>();
   @Output() toggleEvent = new EventEmitter<boolean>();
+  @Output() closeMobileEvent = new EventEmitter<void>();
+
+  constructor(private authService: AuthService, private router: Router) { }
 
   toggleSidebar() {
     this.sidebarOpen = !this.sidebarOpen;
@@ -18,5 +24,11 @@ export class AdminSidebarComponent {
 
   navigate(route: string) {
     this.navigateEvent.emit(route);
+    this.closeMobileEvent.emit();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
   }
 }

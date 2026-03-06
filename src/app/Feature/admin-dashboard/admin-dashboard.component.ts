@@ -8,9 +8,14 @@ import { Component } from '@angular/core';
 export class AdminDashboardComponent {
   activeComponent = 'dashboard';
   isSidebarExtended = false;
+  isMobileSidebarOpen = false;
 
   toggleSidebar() {
     this.isSidebarExtended = !this.isSidebarExtended;
+  }
+
+  toggleMobileSidebar() {
+    this.isMobileSidebarOpen = !this.isMobileSidebarOpen;
   }
 
   navigate(route: string) {

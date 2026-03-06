@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Jersey+15&family=Mulish:wght@400;700&display=swap');
+
 header {
   position: relative;
   top: 0;
   width: 100%;
   z-index: 1000;
 }
-
 
 @media (min-height: 10%) {
   header {
@@ -18,12 +18,12 @@ header {
   justify-content: space-between;
   text-align: center;
   align-content: center;
-  align-items:center;
+  align-items: center;
   background-color: rgba(0, 0, 0, 0.2);
   bottom: 0;
 }
 
-.logo{
+.logo {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -37,3 +37,12 @@ header {
   -webkit-text-fill-color: transparent;
 }
 
+:host ::ng-deep .hamburger-btn {
+  display: none !important;
+}
+
+@media screen and (max-width: 900px) {
+  :host ::ng-deep .hamburger-btn {
+    display: inline-flex !important;
+  }
+}
