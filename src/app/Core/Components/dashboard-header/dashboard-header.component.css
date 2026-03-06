@@ -41,6 +41,27 @@ header {
   display: none !important;
 }
 
+:host ::ng-deep .hamburger-btn .p-button {
+  -webkit-tap-highlight-color: transparent;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  border: none !important;
+  color: white !important;
+}
+
+:host ::ng-deep .hamburger-btn .p-button:focus,
+:host ::ng-deep .hamburger-btn .p-button:active,
+:host ::ng-deep .hamburger-btn .p-button:hover {
+  box-shadow: none !important;
+  background: transparent !important;
+  outline: none !important;
+}
+
+:host ::ng-deep .hamburger-btn .p-ink {
+  display: none !important;
+}
+
 @media screen and (max-width: 900px) {
   :host ::ng-deep .hamburger-btn {
     display: inline-flex !important;
