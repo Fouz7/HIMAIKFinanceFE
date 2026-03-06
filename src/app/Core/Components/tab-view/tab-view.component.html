@@ -1,6 +1,7 @@
-<div class="tabs">
-  <button class="tab" [class.active]="selectedTab === 0" (click)="selectTab(0)">Income</button>
-  <button class="tab" [class.active]="selectedTab === 1" (click)="selectTab(1)">Transaction</button>
+<div class="tabs" #tabsContainer>
+  <button class="tab" #tabButton [class.active]="selectedTab === 0" (click)="selectTab(0)">Income</button>
+  <button class="tab" #tabButton [class.active]="selectedTab === 1" (click)="selectTab(1)">Transaction</button>
+  <div class="tab-indicator" [ngStyle]="indicatorStyle"></div>
 </div>
 <div class="tab-content" *ngIf="selectedTab === 0">
   <table>

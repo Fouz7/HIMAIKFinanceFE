@@ -1,4 +1,4 @@
-import { Component, ViewEncapsulation } from '@angular/core';
+import { Component, ViewEncapsulation, ViewChildren, ElementRef, AfterViewInit, QueryList } from '@angular/core';
 import { IncomeDataService } from '../../Services/income-data.service';
 import { TransactionService } from '../../Services/transaction.service';
 
@@ -8,10 +8,13 @@ import { TransactionService } from '../../Services/transaction.service';
   styleUrls: ['./tab-view.component.css'],
   encapsulation: ViewEncapsulation.None,
 })
-export class TabViewComponent {
+export class TabViewComponent implements AfterViewInit {
+  @ViewChildren('tabButton') tabButtons!: QueryList<ElementRef>;
+
   incomeData: any[] = [];
   transactionData: any[] = [];
   selectedTab = 0;
+  indicatorStyle: { [key: string]: string } = {};
 
   incomePage: number = 1;
   transactionPage: number = 1;
@@ -29,6 +32,10 @@ export class TabViewComponent {
   ngOnInit() {
     this.loadIncomeData();
     this.loadTransactions();
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => this.updateIndicator());
   }
 
   loadIncomeData() {
@@ -53,6 +60,21 @@ export class TabViewComponent {
 
   selectTab(index: number) {
     this.selectedTab = index;
+    this.updateIndicator();
+  }
+
+  updateIndicator() {
+    const buttons = this.tabButtons.toArray();
+    if (buttons[this.selectedTab]) {
+      const btn = buttons[this.selectedTab].nativeElement;
+      const container = btn.parentElement;
+      const containerRect = container.getBoundingClientRect();
+      const btnRect = btn.getBoundingClientRect();
+      this.indicatorStyle = {
+        width: `${btnRect.width}px`,
+        left: `${btnRect.left - containerRect.left}px`
+      };
+    }
   }
 
   nextPage() {
