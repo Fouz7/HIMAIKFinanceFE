@@ -40,3 +40,28 @@ body::-webkit-scrollbar-thumb {
 body::-webkit-scrollbar-thumb:hover {
   background-color: #555;
 }
+
+/* ===== Global: Remove blue tap highlight on all interactive elements ===== */
+*,
+*::before,
+*::after {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ===== Global: Remove PrimeNG button focus ring & ripple ===== */
+.p-button:focus,
+.p-button:active {
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.p-ink {
+  display: none !important;
+}
+
+.p-button.p-button-text:focus,
+.p-button.p-button-text:active,
+.p-button.p-button-text:hover {
+  background: transparent !important;
+  box-shadow: none !important;
+}
