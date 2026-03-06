@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {IncomeDataService} from '../../Services/income-data.service';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { IncomeDataService } from '../../Services/income-data.service';
 
 @Component({
   selector: 'app-income-table',
@@ -22,21 +22,23 @@ export class IncomeTableComponent implements OnInit {
     this.incomeForm = this.formBuilder.group({
       name: ['', Validators.required],
       nominal: ['', Validators.required],
-      transferDate: ['', Validators.required]
+      transfer_date: ['', Validators.required]
     });
   }
 
   ngOnInit() {
-    this.getAllIncomeData();
+    this.loadIncomeData();
   }
 
-  getAllIncomeData() {
-    this.incomeDataService.getAllIncomeData('asc', this.pageNumber, this.pageSize)
-      .subscribe(data => {
-        console.log('DataIncome:', data);
-        this.incomeData = data;
+  loadIncomeData() {
+    this.incomeDataService.getIncomes(this.pageNumber, this.pageSize)
+      .subscribe(response => {
+        console.log('DataIncome:', response);
+        this.incomeData = response.data;
         this.isDataLoaded = true;
-        this.hasMoreData = data.length === this.pageSize;
+        this.hasMoreData = response.pagination
+          ? this.pageNumber < response.pagination.totalPages
+          : response.data.length === this.pageSize;
       }, error => {
         console.error('Error:', error);
       });
@@ -44,10 +46,10 @@ export class IncomeTableComponent implements OnInit {
 
   addIncome() {
     if (this.incomeForm.valid) {
-      this.incomeDataService.addIncomeData(this.incomeForm.value)
+      this.incomeDataService.addIncome(this.incomeForm.value)
         .subscribe(response => {
           console.log('Income added:', response);
-          this.getAllIncomeData();
+          this.loadIncomeData();
           this.incomeForm.reset();
           this.closeModal();
         }, error => {
@@ -57,12 +59,7 @@ export class IncomeTableComponent implements OnInit {
   }
 
   deleteIncome(id: number) {
-    this.incomeDataService.deleteIncomeData(id).subscribe(() => {
-      console.log('Income deleted');
-      this.getAllIncomeData();
-    }, error => {
-      console.error('Error:', error);
-    });
+    console.warn('Delete income is not yet supported by the service');
   }
 
   openModal() {
@@ -87,14 +84,14 @@ export class IncomeTableComponent implements OnInit {
   prevPage() {
     if (this.pageNumber > 1) {
       this.pageNumber--;
-      this.getAllIncomeData();
+      this.loadIncomeData();
     }
   }
 
   nextPage() {
     if (this.hasMoreData) {
       this.pageNumber++;
-      this.getAllIncomeData();
+      this.loadIncomeData();
     }
   }
 }

@@ -1,22 +1,37 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { environment } from '@env/environment';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'https://himaikfinance.azurewebsites.net'
+  private apiUrl = environment.apiUrl;
+  private isLoggedIn = new BehaviorSubject<boolean>(this.hasToken());
+  isLoggedIn$ = this.isLoggedIn.asObservable();
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+  ) { }
 
-  login(username: string, password: string): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/User/LoginUser`, { username, password }).pipe(
+  private hasToken(): boolean {
+    if (typeof window !== 'undefined') {
+      return !!localStorage.getItem('token');
+    }
+    return false;
+  }
+
+  login(credentials: any): Observable<any> {
+    return this.http.post(`${this.apiUrl}/auth/login`, credentials).pipe(
       tap((response: any) => {
         console.log(response);
-        if (response && response.token) {
-          localStorage.setItem('token', response.token);
+        if (response && response.data.token) {
+          localStorage.setItem('token', response.data.token);
+          this.isLoggedIn.next(true);
         }
       })
     );
@@ -24,6 +39,8 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('token');
+    this.isLoggedIn.next(false);
+    this.router.navigate(['/']);
   }
 
   getToken(): string | null {

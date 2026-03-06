@@ -4,7 +4,7 @@
       <h1>Add Transaction</h1>
       <div class="form-input">
         <label>Nominal</label>
-        <input pInputText formControlName="debit" class="input">
+        <input pInputText formControlName="nominal" class="input">
       </div>
       <div class="form-input">
         <label>Notes</label>
@@ -29,28 +29,29 @@
 
   <table>
     <thead>
-    <tr *ngIf="isDataLoaded">
-      <th>No</th>
-      <th>Debit</th>
-      <th>Credit</th>
-      <th>Balance</th>
-      <th>Notes</th>
-      <th>Action</th>
-    </tr>
+      <tr *ngIf="isDataLoaded">
+        <th>No</th>
+        <th>Debit</th>
+        <th>Credit</th>
+        <th>Balance</th>
+        <th>Notes</th>
+        <th>Action</th>
+      </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let transaction of transactionData; let i = index">
-      <td>{{i + 1}}</td>
-      <td>{{transaction.debit}}</td>
-      <td>{{transaction.credit}}</td>
-      <td>{{transaction.balance}}</td>
-      <td>{{transaction.notes}}</td>
-      <td>
-        <button [disabled]="transaction.debit <= 0" (click)="deleteTransaction(transaction.id)" class="delete-button" [ngClass]="{'disabled': transaction.debit <= 0}">
-          <i class="pi pi-trash"></i>
-        </button>
-      </td>
-    </tr>
+      <tr *ngFor="let transaction of transactionData; let i = index">
+        <td>{{i + 1}}</td>
+        <td>{{transaction.debit | number:'1.0-0'}}</td>
+        <td>{{transaction.credit | number:'1.0-0'}}</td>
+        <td>{{transaction.balance | number:'1.0-0'}}</td>
+        <td>{{transaction.notes}}</td>
+        <td>
+          <button [disabled]="transaction.debit <= 0" (click)="deleteTransaction(transaction.transactionId)"
+            class="delete-button" [ngClass]="{'disabled': transaction.debit <= 0}">
+            <i class="pi pi-trash"></i>
+          </button>
+        </td>
+      </tr>
     </tbody>
   </table>
 

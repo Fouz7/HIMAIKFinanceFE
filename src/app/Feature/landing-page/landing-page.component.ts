@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { TransactionService } from '../../Core/Services/transaction.service';
+import { Component, OnInit } from '@angular/core';
+import { BalanceService } from '../../Core/Services/balance-service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -7,38 +7,47 @@ import { Router } from '@angular/router';
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'
 })
-export class LandingPageComponent {
-  latestBalance: number = 0
-  totalIncome: number = 0
-  totalOutcome: number = 0
+export class LandingPageComponent implements OnInit {
+  latestBalance: number = 0;
+  totalIncome: number = 0;
+  totalOutcome: number = 0;
 
   constructor(
-    private transactionService: TransactionService,
+    private balanceService: BalanceService,
     private router: Router
   ) { }
-
 
   ngOnInit() {
     const token = localStorage.getItem('token');
     if (token) {
       this.router.navigate(['/admin-dashboard']);
     }
-    this.getAllTransaction();
+    this.loadBalanceData();
   }
 
-  getAllTransaction() {
-    this.transactionService.getAllTransaction()
-      .subscribe(data => {
-        console.log('DataTransaction:', data);
+  loadBalanceData() {
+    this.balanceService.getBalance().subscribe(
+      (res: any) => {
+        console.log('Balance:', res);
+        this.latestBalance = res.balance;
+      },
+      error => console.error('Error fetching balance:', error)
+    );
 
-        this.latestBalance = data[data.length - 1].balance;
+    this.balanceService.getTotalIncome().subscribe(
+      (res: any) => {
+        console.log('TotalIncome:', res);
+        this.totalIncome = res.totalIncome;
+      },
+      error => console.error('Error fetching total income:', error)
+    );
 
-        data.forEach(transaction => {
-          this.totalIncome += transaction.credit;
-          this.totalOutcome += transaction.debit;
-        })
-      }, error => {
-        console.error('Error:', error);
-      });
+    this.balanceService.getTotalOutcome().subscribe(
+      (res: any) => {
+        console.log('TotalOutcome:', res);
+        this.totalOutcome = res.totalOutcome;
+      },
+      error => console.error('Error fetching total outcome:', error)
+    );
   }
 }

@@ -10,7 +10,8 @@ table {
   table-layout: fixed;
 }
 
-th, td {
+th,
+td {
   padding: 15px;
   text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.3);
@@ -23,7 +24,7 @@ th {
   font-size: larger;
 }
 
-td{
+td {
   color: ghostwhite;
 }
 
@@ -95,7 +96,7 @@ tr:hover {
   margin-top: 1%;
 }
 
-.prevNext{
+.prevNext {
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   padding: 10px;
@@ -103,6 +104,18 @@ tr:hover {
   border: none;
   margin-inline: 0.5%;
   color: ghostwhite;
+  transition: background-color 0.3s, opacity 0.3s, color 0.3s;
+}
+
+.prevNext:hover:not(:disabled) {
+  background-color: rgba(255, 255, 255, 0.25);
+}
+
+.prevNext:disabled {
+  opacity: 0.3;
+  color: #888;
+  cursor: not-allowed;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 @media screen and (max-width: 768px) {
@@ -118,11 +131,12 @@ tr:hover {
     font-size: small;
   }
 
-  th, td {
+  th,
+  td {
     padding: 10px;
   }
 
-  th{
+  th {
     white-space: nowrap;
   }
 
@@ -130,7 +144,7 @@ tr:hover {
     display: none;
   }
 
-  .prevNextButton{
+  .prevNextButton {
     margin-top: 3%;
   }
 }

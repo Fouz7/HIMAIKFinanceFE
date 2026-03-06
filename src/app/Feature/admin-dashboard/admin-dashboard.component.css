@@ -32,10 +32,12 @@ app-dashboard {
 }
 
 .content {
-  width: 100%;
   flex-grow: 1;
-  padding: 5% 5% 0 5%;
+  padding: 80px 5% 0 5%;
+  margin-left: 60px;
   transition: margin-left 0.3s;
+  box-sizing: border-box;
+  max-width: calc(100vw - 60px);
 }
 
 .sidebar-extended .navbar {
@@ -44,7 +46,8 @@ app-dashboard {
 }
 
 .sidebar-extended .content {
-  margin-left: 160px;
+  margin-left: 150px;
+  max-width: calc(100vw - 150px);
 }
 
 .menu-item {

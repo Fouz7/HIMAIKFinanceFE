@@ -1,14 +1,60 @@
-.card-container {
+.container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  width: 100%;
-  padding: 1rem;
+  align-items: center;
   gap: 1rem;
+  padding: 1rem;
+  width: 90%;
+  margin: 0 auto;
 }
 
-app-card, app-minister-card {
-  width: 50%;
+.card-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  gap: 1rem;
+  width: 100%;
+}
+
+.card-grid app-card:nth-child(1) {
+  /* Income - top left */
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.card-grid app-card:nth-child(2) {
+  /* Balance - right, spanning both rows */
+  grid-column: 2;
+  grid-row: 1 / 3;
+}
+
+.card-grid app-card:nth-child(3) {
+  /* Outcome - bottom left */
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.card-grid app-card {
+  width: 100%;
   height: 100%;
+}
+
+.card-grid app-card.balance {
+  display: flex;
+  flex-direction: column;
+}
+
+::ng-deep .balance .my-card {
+  height: 100% !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-sizing: border-box !important;
+}
+
+::ng-deep .balance .my-card p {
+  flex: 1;
+  align-items: center;
 }
 
 .balance {
@@ -49,7 +95,8 @@ p-chart {
 
 .small-chart {
   width: 100%;
-  height: 200px; /* Adjust the height as needed */
+  height: 200px;
+  /* Adjust the height as needed */
 }
 
 
@@ -84,3 +131,16 @@ p-chart {
   height: 200px;
 }
 
+@media screen and (max-width: 768px) {
+  .card-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .card-grid app-card:nth-child(1),
+  .card-grid app-card:nth-child(2),
+  .card-grid app-card:nth-child(3) {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}

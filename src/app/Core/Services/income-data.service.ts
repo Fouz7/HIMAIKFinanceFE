@@ -1,31 +1,28 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Income } from '../Interfaces/income';
-import { IncomeDataDto } from '../Interfaces/income-data-dto';
+import { ApiResponse } from '../Interfaces/income-data-dto';
+import { environment } from '@env/environment';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class IncomeDataService {
-  private url = 'https://himaikfinance.azurewebsites.net/IncomeData';
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) { }
-
-  getAllIncomeData(nominalSortOrder: string, pageNumber: number, pageSize: number) {
-    const params = new HttpParams()
-      .set('nominalSortOrder', nominalSortOrder)
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-
-    return this.http.get<Income[]>(this.url + '/GetAllIncomeData', { params });
+  getIncomes(page: number, limit: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/incomes`, {
+      params: {
+        page: page.toString(),
+        limit: limit.toString()
+      }
+    });
   }
 
-  addIncomeData(incomeData: IncomeDataDto): Observable<IncomeDataDto> {
-    return this.http.post<IncomeDataDto>(this.url + '/AddIncomeData', incomeData);
-  }
-
-  deleteIncomeData(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/DeleteIncomeData/${id}`);
+  addIncome(data: { name: string; nominal: number; transfer_date: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/incomes`, data);
   }
 }

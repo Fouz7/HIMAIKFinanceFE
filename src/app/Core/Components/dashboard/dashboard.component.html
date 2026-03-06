@@ -1,31 +1,15 @@
 <div class="container">
-  <div class="card-container">
-    <app-card
-      [cardTitle]="'Total Income'"
-      [cardContent]="totalIncome.toString()"
-      class="Income"/>
-    <app-card
-      [cardTitle]="'Total Outcome'"
-      [cardContent]="totalOutcome.toString()"
-      class="Outcome"/>
+  <div class="card-grid">
+    <app-card cardTitle="Total Income" cardContent="{{ totalIncome | number:'1.0-0' }}" class="Income" />
+    <app-card cardTitle="Balance" cardContent="{{ latestBalance | number:'1.0-0' }}" class="balance" />
+    <app-card cardTitle="Total Outcome" cardContent="{{ totalOutcome | number:'1.0-0' }}" class="Outcome" />
   </div>
-  <div class="card-container">
-    <app-card
-      [cardTitle]="'Balance'"
-      [cardContent]="latestBalance.toString()"
-      class="balance"/>
-    <app-minister-card
-      [cardTitle]="'Minister of Finance'"
-      [imgContent]="'assets/aldrian.png'"
-      [cardContent]="'Aldrian'"
-      class="minister"/>
-  </div>
-<!--  <div class="chart-container">-->
-<!--    <div class="small-chart">-->
-<!--      <p-chart type="doughnut" [data]="donutChartData"></p-chart>-->
-<!--    </div>-->
-<!--    <div class="small-chart">-->
-<!--      <p-chart type="line" [data]="lineChartData"></p-chart>-->
-<!--    </div>-->
-<!--  </div>-->
+  <!--  <div class="chart-container">-->
+  <!--    <div class="small-chart">-->
+  <!--      <p-chart type="doughnut" [data]="donutChartData"></p-chart>-->
+  <!--    </div>-->
+  <!--    <div class="small-chart">-->
+  <!--      <p-chart type="line" [data]="lineChartData"></p-chart>-->
+  <!--    </div>-->
+  <!--  </div>-->
 </div>

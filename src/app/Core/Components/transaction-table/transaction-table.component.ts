@@ -20,21 +20,23 @@ export class TransactionTableComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.transactionForm = this.formBuilder.group({
-      debit: ['', Validators.required],
+      nominal: ['', Validators.required],
       notes: ['', Validators.required]
     });
   }
 
   ngOnInit() {
-    this.getAllTransactionPaginated();
+    this.loadTransactions();
   }
 
-  getAllTransactionPaginated() {
-    this.transactionService.getAllTransactionPaginated(this.pageNumber, this.pageSize)
-      .subscribe(data => {
-        this.transactionData = data;
+  loadTransactions() {
+    this.transactionService.getOutcomes(this.pageNumber, this.pageSize)
+      .subscribe(response => {
+        this.transactionData = response.data;
         this.isDataLoaded = true;
-        this.hasMoreData = data.length === this.pageSize;
+        this.hasMoreData = response.pagination
+          ? this.pageNumber < response.pagination.totalPages
+          : response.data.length === this.pageSize;
       }, error => {
         console.error('Error:', error);
       });
@@ -44,7 +46,7 @@ export class TransactionTableComponent implements OnInit {
     if (this.transactionForm.valid) {
       this.transactionService.addTransaction(this.transactionForm.value)
         .subscribe(response => {
-          this.getAllTransactionPaginated();
+          this.loadTransactions();
           this.transactionForm.reset();
           this.closeModal();
         }, error => {
@@ -54,11 +56,7 @@ export class TransactionTableComponent implements OnInit {
   }
 
   deleteTransaction(id: number) {
-    this.transactionService.deleteTransaction(id).subscribe(() => {
-      this.getAllTransactionPaginated();
-    }, error => {
-      console.error('Error:', error);
-    });
+    console.warn('Delete transaction is not yet supported by the service');
   }
 
   openModal() {
@@ -83,14 +81,14 @@ export class TransactionTableComponent implements OnInit {
   prevPage() {
     if (this.pageNumber > 1) {
       this.pageNumber--;
-      this.getAllTransactionPaginated();
+      this.loadTransactions();
     }
   }
 
   nextPage() {
     if (this.hasMoreData) {
       this.pageNumber++;
-      this.getAllTransactionPaginated();
+      this.loadTransactions();
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TransactionService } from '../../Services/transaction.service';
+import { BalanceService } from '../../Services/balance-service';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,36 +10,43 @@ export class DashboardComponent implements OnInit {
   latestBalance: number = 0;
   totalIncome: number = 0;
   totalOutcome: number = 0;
-  balanceData: number[] = [];
-  balanceLabels: string[] = [];
 
   donutChartData: any;
   lineChartData: any;
 
-  constructor(private transactionService: TransactionService) { }
+  constructor(private balanceService: BalanceService) { }
 
   ngOnInit() {
-    this.getAllTransaction();
+    this.loadBalanceData();
   }
 
-  getAllTransaction() {
-    this.transactionService.getAllTransaction()
-      .subscribe(data => {
-        console.log('DataTransaction:', data);
-
-        this.latestBalance = data[data.length - 1].balance;
-
-        data.forEach(transaction => {
-          this.totalIncome += transaction.credit;
-          this.totalOutcome += transaction.debit;
-          this.balanceData.push(transaction.balance);
-          this.balanceLabels.push(new Date(transaction.createdAt).toISOString());
-        });
-
+  loadBalanceData() {
+    this.balanceService.getBalance().subscribe(
+      (res: any) => {
+        console.log('Balance:', res);
+        this.latestBalance = res.balance;
         this.updateCharts();
-      }, error => {
-        console.error('Error:', error);
-      });
+      },
+      error => console.error('Error fetching balance:', error)
+    );
+
+    this.balanceService.getTotalIncome().subscribe(
+      (res: any) => {
+        console.log('TotalIncome:', res);
+        this.totalIncome = res.totalIncome;
+        this.updateCharts();
+      },
+      error => console.error('Error fetching total income:', error)
+    );
+
+    this.balanceService.getTotalOutcome().subscribe(
+      (res: any) => {
+        console.log('TotalOutcome:', res);
+        this.totalOutcome = res.totalOutcome;
+        this.updateCharts();
+      },
+      error => console.error('Error fetching total outcome:', error)
+    );
   }
 
   updateCharts() {
@@ -54,11 +61,11 @@ export class DashboardComponent implements OnInit {
     };
 
     this.lineChartData = {
-      labels: this.balanceLabels,
+      labels: ['Balance'],
       datasets: [
         {
           label: 'Balance',
-          data: this.balanceData,
+          data: [this.latestBalance],
           fill: false,
           borderColor: '#0000FF'
         }

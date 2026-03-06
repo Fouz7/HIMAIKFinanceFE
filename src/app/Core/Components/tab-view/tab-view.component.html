@@ -16,14 +16,14 @@
       <tr *ngFor="let income of incomeData; let i = index">
         <td class="no-mobile">{{i + 1}}</td>
         <td>{{income.name}}</td>
-        <td>{{income.nominal}}</td>
-        <td>{{income.transferDate | date:'dd-MM-yyyy'}}</td>
+        <td>{{income.nominal | number:'1.0-0'}}</td>
+        <td>{{income.transfer_date | date:'dd-MM-yyyy'}}</td>
       </tr>
     </tbody>
   </table>
   <div class="prevNextButton">
-    <button class="prevNext" (click)="prevPage()">Previous Page</button>
-    <button class="prevNext" (click)="nextPage()">Next Page</button>
+    <button class="prevNext" (click)="prevPage()" [disabled]="incomePage === 1">Previous Page</button>
+    <button class="prevNext" (click)="nextPage()" [disabled]="!hasMoreIncome">Next Page</button>
   </div>
 </div>
 <div class="tab-content" *ngIf="selectedTab === 1">
@@ -40,15 +40,15 @@
     <tbody>
       <tr *ngFor="let transaction of transactionData; let i = index">
         <td class="no-mobile">{{i + 1}}</td>
-        <td>{{transaction.debit}}</td>
-        <td>{{transaction.credit}}</td>
-        <td>{{transaction.balance}}</td>
+        <td>{{transaction.debit | number:'1.0-0'}}</td>
+        <td>{{transaction.credit | number:'1.0-0'}}</td>
+        <td>{{transaction.balance | number:'1.0-0'}}</td>
         <td>{{transaction.notes}}</td>
       </tr>
     </tbody>
   </table>
   <div class="prevNextButton">
-    <button class="prevNext" (click)="prevPage()">Previous Page</button>
-    <button class="prevNext" (click)="nextPage()">Next Page</button>
+    <button class="prevNext" (click)="prevPage()" [disabled]="transactionPage === 1">Previous Page</button>
+    <button class="prevNext" (click)="nextPage()" [disabled]="!hasMoreTransaction">Next Page</button>
   </div>
 </div>

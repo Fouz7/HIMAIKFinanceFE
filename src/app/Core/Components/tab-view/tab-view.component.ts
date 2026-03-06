@@ -1,6 +1,6 @@
-import {Component, ViewEncapsulation} from '@angular/core';
-import {IncomeDataService} from '../../Services/income-data.service';
-import {TransactionService} from '../../Services/transaction.service';
+import { Component, ViewEncapsulation } from '@angular/core';
+import { IncomeDataService } from '../../Services/income-data.service';
+import { TransactionService } from '../../Services/transaction.service';
 
 @Component({
   selector: 'app-tab-view',
@@ -12,8 +12,13 @@ export class TabViewComponent {
   incomeData: any[] = [];
   transactionData: any[] = [];
   selectedTab = 0;
-  pageNumber: number = 1;
+
+  incomePage: number = 1;
+  transactionPage: number = 1;
   pageSize: number = 10;
+
+  hasMoreIncome: boolean = true;
+  hasMoreTransaction: boolean = true;
 
   constructor(
     private incomeDataService: IncomeDataService,
@@ -22,25 +27,25 @@ export class TabViewComponent {
   }
 
   ngOnInit() {
-    this.getAllIncomeData();
-    this.getAllTransactionPaginated();
+    this.loadIncomeData();
+    this.loadTransactions();
   }
 
-  getAllIncomeData() {
-    this.incomeDataService.getAllIncomeData('asc', this.pageNumber, this.pageSize)
-      .subscribe(data => {
-        console.log('DataIncome:', data);
-        this.incomeData = data;
+  loadIncomeData() {
+    this.incomeDataService.getIncomes(this.incomePage, this.pageSize)
+      .subscribe(response => {
+        this.incomeData = response.data;
+        this.hasMoreIncome = this.incomePage < response.pagination.totalPages;
       }, error => {
         console.error('Error:', error);
       });
   }
 
-  getAllTransactionPaginated() {
-    this.transactionService.getAllTransactionPaginated(this.pageNumber, this.pageSize)
-      .subscribe(data => {
-        console.log('DataTransaction:', data);
-        this.transactionData = data;
+  loadTransactions() {
+    this.transactionService.getOutcomes(this.transactionPage, this.pageSize)
+      .subscribe(response => {
+        this.transactionData = response.data;
+        this.hasMoreTransaction = this.transactionPage < response.pagination.totalPages;
       }, error => {
         console.error('Error:', error);
       });
@@ -51,22 +56,22 @@ export class TabViewComponent {
   }
 
   nextPage() {
-    this.pageNumber++;
-    if (this.selectedTab === 0) {
-      this.getAllIncomeData();
-    } else if (this.selectedTab === 1) {
-      this.getAllTransactionPaginated();
+    if (this.selectedTab === 0 && this.hasMoreIncome) {
+      this.incomePage++;
+      this.loadIncomeData();
+    } else if (this.selectedTab === 1 && this.hasMoreTransaction) {
+      this.transactionPage++;
+      this.loadTransactions();
     }
   }
 
   prevPage() {
-    if (this.pageNumber > 1) {
-      this.pageNumber--;
-      if (this.selectedTab === 0) {
-        this.getAllIncomeData();
-      } else if (this.selectedTab === 1) {
-        this.getAllTransactionPaginated();
-      }
+    if (this.selectedTab === 0 && this.incomePage > 1) {
+      this.incomePage--;
+      this.loadIncomeData();
+    } else if (this.selectedTab === 1 && this.transactionPage > 1) {
+      this.transactionPage--;
+      this.loadTransactions();
     }
   }
 }

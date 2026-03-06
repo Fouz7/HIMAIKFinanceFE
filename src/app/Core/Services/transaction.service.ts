@@ -1,34 +1,26 @@
-import {Injectable} from '@angular/core';
-import {HttpClient, HttpParams} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {Transaction} from '../Interfaces/transaction';
+import { inject, Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { ApiResponse } from '../Interfaces/transaction';
+import { environment } from '@env/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TransactionService {
-  private url = 'https://himaikfinance.azurewebsites.net/Transaction';
+  private http = inject(HttpClient);
+  private apiUrl = environment.apiUrl;
 
-  constructor(private http: HttpClient) {
+  getOutcomes(page: number, limit: number): Observable<ApiResponse> {
+    return this.http.get<ApiResponse>(`${this.apiUrl}/transactions`, {
+      params: {
+        page: page.toString(),
+        limit: limit.toString()
+      }
+    });
   }
 
-  getAllTransaction(): Observable<Transaction[]> {
-    return this.http.get<Transaction[]>(`${this.url}/GetAllTransactions`);
-  }
-
-  getAllTransactionPaginated(pageNumber: number, pageSize: number): Observable<Transaction[]> {
-    const params = new HttpParams()
-      .set('pageNumber', pageNumber.toString())
-      .set('pageSize', pageSize.toString());
-
-    return this.http.get<Transaction[]>(`${this.url}/GetAllTransactionsPaginated`, {params});
-  }
-
-  addTransaction(transaction: Transaction): Observable<Transaction> {
-    return this.http.post<Transaction>(`${this.url}/AddTransaction`, transaction);
-  }
-
-  deleteTransaction(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.url}/DeleteTransaction/${id}`);
+  addTransaction(data: { nominal: number; notes: string }): Observable<any> {
+    return this.http.post(`${this.apiUrl}/transactions`, data);
   }
 }

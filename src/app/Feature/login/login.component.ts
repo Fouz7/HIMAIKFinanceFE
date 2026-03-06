@@ -8,8 +8,8 @@ import { Router } from '@angular/router';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  username: string ='';
-  password: string ='';
+  username: string = '';
+  password: string = '';
 
   constructor(
     private authService: AuthService,
@@ -17,7 +17,8 @@ export class LoginComponent {
   ) { }
 
   submit() {
-    this.authService.login(this.username, this.password).subscribe(
+    const credentials = { username: this.username, password: this.password };
+    this.authService.login(credentials).subscribe(
       data => {
         // handle successful login
         this.router.navigate(['/admin-dashboard']);
